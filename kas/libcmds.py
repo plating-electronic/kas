@@ -294,6 +294,11 @@ class SetupHome(Command):
         self._setup_aws_creds()
         os.umask(def_umask)
 
+        if os.environ.get('DBUS_SESSION_BUS_ADDRESS', False):
+            dbus_session_bus_addr = os.environ.get('DBUS_SESSION_BUS_ADDRESS')
+            ctx.environ['DBUS_SESSION_BUS_ADDRESS'] = dbus_session_bus_addr
+            logging.debug('using DBUS_SESSION_BUS_ADDRESS=%s', dbus_session_bus_addr)
+
         ctx.environ['HOME'] = self.tmpdirname
 
 
